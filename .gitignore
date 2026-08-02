@@ -1,0 +1,9 @@
+dockerfiles/base/README.md
+
+# Outputs and manifests produced by the local "library" tool (linter/scanner/
+# refurbisher runs). These are per-developer artifacts, not repository state.
+.library-tool-outputs/
+.library.manifest.yaml
+
+# Cursor IDE local workspace state (per-developer, not repo state).
+.cursor/

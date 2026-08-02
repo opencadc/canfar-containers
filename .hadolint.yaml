@@ -1,0 +1,4 @@
+# Hadolint Configuration
+ignored:
+  - DL3008 # Pin versions in apt get install (Allow latest security patches)
+  - DL3013 # Pin versions in pip (We use uv/pixi for management)
