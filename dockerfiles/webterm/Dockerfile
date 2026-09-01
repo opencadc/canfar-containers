@@ -141,8 +141,9 @@ RUN curl https://cursor.com/install -fsS | bash \
 RUN printf 'set -g default-shell /bin/bash\nset -g mouse off\nset -g history-limit 50000\nset -g status off\nset -g escape-time 50\n' > /etc/tmux.conf \
     && printf "#!/bin/bash\n\
 mkdir -p \"\${HOME}/.local/bin\" \"\${HOME}/.cache/uv\" \"\${HOME}/.pixi\"\n\
+session_name=\"\${skaha_sessionname:-\$(hostname)}\"\n\
 ttyd --writable --port 5000 -w \"\${HOME}\" \
--t titleFixed=\"CANFAR Webterm\" \
+-t titleFixed=\"\${session_name} - CANFAR Webterm\" \
 -t theme='{\"background\": \"#282828\"}' \
 tmux new-session -A -s canfar\n" > /cadc/startup.sh \
     && chmod +x /cadc/startup.sh
