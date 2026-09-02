@@ -39,7 +39,7 @@ The images follow a modular layered model. All images are published to `images.c
 
 2. **Terminal image (`terminal`)**
    - **Inherits**: `cadc/python:3.12`
-   - **CLI utilities**: `acl`, `bash-completion`, `ca-certificates`, `curl`, `git`, `htop`, `wget` (all version-pinned and Renovate-tracked)
+   - **CLI utilities**: `acl`, `bash-completion`, `ca-certificates`, `curl`, `git`, `htop`, `openssh-client`, `wget` (all version-pinned and Renovate-tracked)
    - **Locale**: UTF-8 (`en_US.UTF-8`) generated at build time; `LANG` / `LC_ALL` exported
    - **Shell**: Bash aliases (`py`, `ll`, `la`, safe `rm`/`cp`/`mv -i`, …), persistent history, and tab completion for `uv` and `pixi`
 

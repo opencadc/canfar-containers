@@ -38,6 +38,8 @@ ARG CURL_VERSION=8.14.1-2+deb13u2
 ARG GIT_VERSION=1:2.47.3-0+deb13u1
 # renovate: datasource=repology depName=debian_13/htop versioning=deb
 ARG HTOP_VERSION=3.4.1-5
+# renovate: datasource=repology depName=debian_13/openssh versioning=deb
+ARG OPENSSH_CLIENT_VERSION=1:10.0p1-7+deb13u4
 # renovate: datasource=repology depName=debian_13/wget versioning=deb
 ARG WGET_VERSION=1.25.0-2
 
@@ -59,6 +61,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git=${GIT_VERSION} \
     htop=${HTOP_VERSION} \
     locales \
+    openssh-client=${OPENSSH_CLIENT_VERSION} \
     wget=${WGET_VERSION} \
     && rm -rf /var/lib/apt/lists/* \
     && sed -i '/en_US.UTF-8 UTF-8/s/^# //g' /etc/locale.gen \
