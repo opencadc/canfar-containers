@@ -145,7 +145,7 @@ session_name=\"\${skaha_sessionname:-\$(hostname)}\"\n\
 ttyd --writable --port 5000 -w \"\${HOME}\" \
 -t titleFixed=\"\${session_name} - CANFAR Webterm\" \
 -t theme='{\"background\": \"#282828\"}' \
-tmux new-session -A -s canfar\n" > /cadc/startup.sh \
+-- tmux new-session -A -s canfar bash -i\n" > /cadc/startup.sh \
     && chmod +x /cadc/startup.sh
 
 # --- Build info (for inspection in running sessions, e.g. cat /build_info/Dockerfile) ---
