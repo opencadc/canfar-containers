@@ -17,7 +17,7 @@
 # CADC's volume mounts (.local, .cache, .pixi are preserved across sessions).
 
 ARG REGISTRY=images.canfar.net
-ARG BASE_TAG=26.02
+ARG BASE_TAG=26.05
 
 # --- Stage 1: Grab the ttyd binary ---
 # ttyd is a tool for sharing a terminal over the web. We pull its official
@@ -29,18 +29,18 @@ FROM tsl0922/ttyd:1.7.7 AS ttyd-bin
 FROM ${REGISTRY}/cadc/terminal:${BASE_TAG}
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 LABEL description="CANFAR Web-based Terminal Environment" \
-      org.opencontainers.image.version="26.02"
+      org.opencontainers.image.version="26.05"
 
 # /cadc is the CANFAR platform convention for platform-managed scripts
 RUN mkdir -p /cadc
 
 # --- Pinned APT Package Versions ---
 # renovate: datasource=repology depName=debian_13/emacs versioning=deb
-ARG EMACS_VERSION=1:30.1+1-6
+ARG EMACS_VERSION=1:30.1+1-6+deb13u1
 # renovate: datasource=repology depName=debian_13/unzip versioning=deb
-ARG UNZIP_VERSION=6.0-29
+ARG UNZIP_VERSION=6.0-29+deb13u1
 # renovate: datasource=repology depName=debian_13/nano versioning=deb
-ARG NANO_VERSION=8.4-1
+ARG NANO_VERSION=8.4-1+deb13u1
 # renovate: datasource=repology depName=debian_13/tmux versioning=deb
 ARG TMUX_VERSION=3.5a-3
 # renovate: datasource=repology depName=debian_13/vim versioning=deb
@@ -141,10 +141,11 @@ RUN curl https://cursor.com/install -fsS | bash \
 RUN printf 'set -g default-shell /bin/bash\nset -g mouse off\nset -g history-limit 50000\nset -g status off\nset -g escape-time 50\n' > /etc/tmux.conf \
     && printf "#!/bin/bash\n\
 mkdir -p \"\${HOME}/.local/bin\" \"\${HOME}/.cache/uv\" \"\${HOME}/.pixi\"\n\
+session_name=\"\${skaha_sessionname:-\$(hostname)}\"\n\
 ttyd --writable --port 5000 -w \"\${HOME}\" \
--t titleFixed=\"CANFAR Webterm\" \
+-t titleFixed=\"\${session_name} - CANFAR Webterm\" \
 -t theme='{\"background\": \"#282828\"}' \
-tmux new-session -A -s canfar\n" > /cadc/startup.sh \
+-- tmux new-session -A -s canfar bash -i\n" > /cadc/startup.sh \
     && chmod +x /cadc/startup.sh
 
 # --- Build info (for inspection in running sessions, e.g. cat /build_info/Dockerfile) ---

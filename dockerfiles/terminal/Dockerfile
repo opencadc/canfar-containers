@@ -33,11 +33,13 @@ ARG BASH_COMPLETION_VERSION=1:2.16.0-7
 # renovate: datasource=repology depName=debian_13/ca-certificates versioning=deb
 ARG CA_CERTIFICATES_VERSION=20250419
 # renovate: datasource=repology depName=debian_13/curl versioning=deb
-ARG CURL_VERSION=8.14.1-2+deb13u2
+ARG CURL_VERSION=8.14.1-2+deb13u4
 # renovate: datasource=repology depName=debian_13/git versioning=deb
 ARG GIT_VERSION=1:2.47.3-0+deb13u1
 # renovate: datasource=repology depName=debian_13/htop versioning=deb
 ARG HTOP_VERSION=3.4.1-5
+# renovate: datasource=repology depName=debian_13/openssh versioning=deb
+ARG OPENSSH_CLIENT_VERSION=1:10.0p1-7+deb13u4
 # renovate: datasource=repology depName=debian_13/wget versioning=deb
 ARG WGET_VERSION=1.25.0-2
 
@@ -59,6 +61,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git=${GIT_VERSION} \
     htop=${HTOP_VERSION} \
     locales \
+    openssh-client=${OPENSSH_CLIENT_VERSION} \
     wget=${WGET_VERSION} \
     && rm -rf /var/lib/apt/lists/* \
     && sed -i '/en_US.UTF-8 UTF-8/s/^# //g' /etc/locale.gen \
@@ -67,12 +70,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Shell customization — written to /etc/profile.d/terminal.sh so it loads
 # automatically in any login shell. Includes:
 #   - Convenience aliases (py, ll, la, safe rm/cp/mv with -i)
+#   - User-installed CLI tools from ~/.local/bin
 #   - Tab completion for uv and pixi (generated dynamically)
 # The /etc/bash.bashrc append ensures history persistence across sessions
 # and sources the profile script for non-login interactive shells too.
 # hadolint ignore=SC2016
 RUN printf '[ -x /usr/bin/dircolors ] && eval "$(dircolors -b)"\nalias ls='"'"'ls --color=auto'"'"'\nalias py="python3"\nalias ..="cd .."\nalias ...="cd ../.."\nalias ll="ls -alF"\nalias la="ls -A"\nalias l="ls -CF"\nalias rm="rm -i"\nalias cp="cp -i"\nalias mv="mv -i"\nif [ -n "$BASH_VERSION" ]; then\n  command -v uv >/dev/null 2>&1 && eval "$(uv generate-shell-completion bash)"\n  command -v pixi >/dev/null 2>&1 && eval "$(pixi completion --shell bash)"\nfi\n' > /etc/profile.d/terminal.sh \
     && printf 'export HISTFILE="${HOME}/.bash_history"\nshopt -s histappend\nPROMPT_COMMAND="history -a;$PROMPT_COMMAND"\n[ -f /etc/profile.d/terminal.sh ] && . /etc/profile.d/terminal.sh\n' >> /etc/bash.bashrc
+
+# Prepare standard per-user configuration locations and make user-installed
+# tools available without requiring every user to amend PATH in ~/.bashrc.
+# Their contents remain entirely user-managed in the persistent Skaha home.
+# hadolint ignore=SC2016
+RUN printf 'if [ -n "${HOME:-}" ]; then\n  case ":${PATH}:" in\n    *":${HOME}/.local/bin:"*) ;;\n    *) export PATH="${HOME}/.local/bin:${PATH}" ;;\n  esac\n  mkdir -p "${HOME}/.config" "${HOME}/.local/bin" "${HOME}/.ssh"\n  chmod 700 "${HOME}/.ssh" 2>/dev/null || true\nfi\n' >> /etc/profile.d/terminal.sh
 
 # Set locale and terminal type for proper Unicode and color support
 ENV LANG=en_US.UTF-8 \

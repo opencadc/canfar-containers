@@ -34,11 +34,11 @@ RUN mkdir -p /cadc
 
 # --- Pinned APT Package Versions ---
 # renovate: datasource=repology depName=debian_13/emacs versioning=deb
-ARG EMACS_VERSION=1:30.1+1-6
+ARG EMACS_VERSION=1:30.1+1-6+deb13u1
 # renovate: datasource=repology depName=debian_13/unzip versioning=deb
-ARG UNZIP_VERSION=6.0-29
+ARG UNZIP_VERSION=6.0-29+deb13u1
 # renovate: datasource=repology depName=debian_13/nano versioning=deb
-ARG NANO_VERSION=8.4-1
+ARG NANO_VERSION=8.4-1+deb13u1
 # renovate: datasource=repology depName=debian_13/tmux versioning=deb
 ARG TMUX_VERSION=3.5a-3
 # renovate: datasource=repology depName=debian_13/vim versioning=deb
@@ -50,7 +50,7 @@ ARG NODEJS_VERSION=20.19.2+dfsg-1+deb13u2
 # renovate: datasource=repology depName=debian_13/npm versioning=deb
 ARG NPM_VERSION=9.2.0~ds1-3
 # renovate: datasource=repology depName=debian_13/jq versioning=deb
-ARG JQ_VERSION=1.7.1-6+deb13u1
+ARG JQ_VERSION=1.7.1-6+deb13u3
 
 # libatomic1 is a runtime shim from the gcc-14 source package and is not
 # exposed as its own project in Repology, so Renovate can't track it via
