@@ -33,7 +33,7 @@ ARG BASH_COMPLETION_VERSION=1:2.16.0-7
 # renovate: datasource=repology depName=debian_13/ca-certificates versioning=deb
 ARG CA_CERTIFICATES_VERSION=20250419
 # renovate: datasource=repology depName=debian_13/curl versioning=deb
-ARG CURL_VERSION=8.14.1-2+deb13u2
+ARG CURL_VERSION=8.14.1-2+deb13u4
 # renovate: datasource=repology depName=debian_13/git versioning=deb
 ARG GIT_VERSION=1:2.47.3-0+deb13u1
 # renovate: datasource=repology depName=debian_13/htop versioning=deb

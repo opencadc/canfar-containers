@@ -36,11 +36,11 @@ RUN mkdir -p /cadc
 
 # --- Pinned APT Package Versions ---
 # renovate: datasource=repology depName=debian_13/emacs versioning=deb
-ARG EMACS_VERSION=1:30.1+1-6
+ARG EMACS_VERSION=1:30.1+1-6+deb13u1
 # renovate: datasource=repology depName=debian_13/unzip versioning=deb
-ARG UNZIP_VERSION=6.0-29
+ARG UNZIP_VERSION=6.0-29+deb13u1
 # renovate: datasource=repology depName=debian_13/nano versioning=deb
-ARG NANO_VERSION=8.4-1
+ARG NANO_VERSION=8.4-1+deb13u1
 # renovate: datasource=repology depName=debian_13/tmux versioning=deb
 ARG TMUX_VERSION=3.5a-3
 # renovate: datasource=repology depName=debian_13/vim versioning=deb
