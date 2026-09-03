@@ -17,7 +17,7 @@
 # CADC's volume mounts (.local, .cache, .pixi are preserved across sessions).
 
 ARG REGISTRY=images.canfar.net
-ARG BASE_TAG=26.02
+ARG BASE_TAG=26.05
 
 # --- Stage 1: Grab the ttyd binary ---
 # ttyd is a tool for sharing a terminal over the web. We pull its official
@@ -29,7 +29,7 @@ FROM tsl0922/ttyd:1.7.7 AS ttyd-bin
 FROM ${REGISTRY}/cadc/terminal:${BASE_TAG}
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 LABEL description="CANFAR Web-based Terminal Environment" \
-      org.opencontainers.image.version="26.02"
+      org.opencontainers.image.version="26.05"
 
 # /cadc is the CANFAR platform convention for platform-managed scripts
 RUN mkdir -p /cadc

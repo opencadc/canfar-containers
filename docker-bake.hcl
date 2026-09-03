@@ -62,7 +62,7 @@ target "terminal" {
 
 # Webterm image: web-based terminal built on top of terminal.
 # The "contexts" block overrides the FROM reference so that when the webterm
-# Dockerfile pulls "images.canfar.net/cadc/terminal:26.02", Bake substitutes
+# Dockerfile pulls "images.canfar.net/cadc/terminal:26.05", Bake substitutes
 # the locally-built terminal target. This avoids needing to push terminal
 # to the registry before building webterm.
 target "webterm" {
