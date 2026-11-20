@@ -215,7 +215,7 @@ public class TokenRelay implements SsoAdapter {
      * <p><b>Why not {@code Authorization: Bearer}?</b> The opaque CADC_SSO cookie
      * value is not a JWT/OIDC bearer token, and CADC services advertise their
      * bearer endpoint as {@code ivoa_bearer ... HACK=temporary}, expecting a
-     * real bearer obtained from {@code https://ws-cadc.canfar.net/ac/login}.
+     * real bearer obtained from {@code https:///cadc-west-01.canfar.net/ac/login}.
      * Sending the raw cookie value as a bearer triggers a hard 401 even on
      * unauthenticated endpoints like {@code /capabilities}, because the service
      * tries to validate it as a bearer and fails. Sending it as a cookie is
